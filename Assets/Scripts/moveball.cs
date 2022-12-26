@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+//using StageSettingsControl;
 
 
-public class moveball : MonoBehaviour
+public class MoveBall : MonoBehaviour
 {
     [Header("Ball Settings")]
     private Rigidbody rb;
@@ -14,19 +15,19 @@ public class moveball : MonoBehaviour
     public float velocityMax = 400;
     public float velocityUp = 0.3f;
     public float velocity = 300;
-    private int points = 0;
+    //private int points = 0;
 
-    [Header("Text Settings")]
+    /*[Header("Text Settings")]
     public Text score;
     public Text Win;
     public GameObject author;
-    public GameObject panel;
+    public GameObject panel;*/
 
-    [Header("Component Cronometer")]
+    /*[Header("Component Cronometer")]
     public Text timerText;
     private float currentTime;
     private int minute;
-    private Text finalTime;
+    private Text finalTime;*/
 
     [Header("Audio Crystals")]
     public AudioSource audioSource;
@@ -34,24 +35,26 @@ public class moveball : MonoBehaviour
     [Range(0.0f,1.0f)]
     public float volume = 0.4f;
 
-    [Header("Stage Settings")]
-    public int stagepoints = 15; // <-- 15 Default
+    //[Header("Stage Settings")]
+    //public int stagepoints = 15; // <-- 15 Default
 
+    
+    [SerializeField] StageSettings stageSettings;
     
 
 
     void Start()
     {  
         rb = GetComponent<Rigidbody>();
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        score.text = "Score: " + points.ToString() + " / " + stagepoints.ToString();
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //score.text = "Score: " + points.ToString() + " / " + stagepoints.ToString();
         
     }
 
     void Update()
     {   
-        if (points < stagepoints)
+        /*if (points < stagepoints)
         {
             currentTime = currentTime += Time.deltaTime;
 
@@ -61,7 +64,8 @@ public class moveball : MonoBehaviour
             currentTime = 0;
             minute++;
         }
-        SetTimerText();
+        SetTimerText();*/
+        
     }
 
     // FixedUpdate is called bettler performace em physical changes 
@@ -85,7 +89,13 @@ public class moveball : MonoBehaviour
             Instantiate(particule, other.gameObject.transform.position, Quaternion.identity);
             audioSource.PlayOneShot(clip, volume);
             Destroy(other.gameObject);
-            SetScore();             
+            if (stageSettings != null)
+            {
+                stageSettings.SetScore();             
+            } else 
+            {
+                print("StageSettings is a instance NULL at \"Ball\". Select \"Stage Controller\" at Inspector");
+            }
         }
         if(other.gameObject.CompareTag("mountain"))
         {
@@ -94,7 +104,7 @@ public class moveball : MonoBehaviour
     
     }
 
-    void SetScore()
+    /*void SetScore()
     {
         points ++;
         score.text = "Score: " + points.ToString() + " / " + stagepoints.ToString();
@@ -105,12 +115,12 @@ public class moveball : MonoBehaviour
             author.SetActive(true);
             panel.SetActive(true);
         } 
-    }
+    }*/
 
-    private void SetTimerText()
+    /*private void SetTimerText()
     {
         timerText.text = minute.ToString("00") + ":" + currentTime.ToString("00"); 
-    }
+    }*/
     
     private void MovePlayerRelativeToCamera() 
     {
