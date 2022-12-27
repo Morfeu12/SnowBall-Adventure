@@ -18,7 +18,7 @@ Unity's default templete for 3D projects.
 
 
 ## Control 
-![move](https://github.com/Morfeu12/assets/blob/main/SnowBall%20Adventure/move.png)
+
 | Move | Move (Arrow Keys) | Mute (sounds) |
 | :---:|      :---:        | :---:         |
 | A    | Left              | Q             |
